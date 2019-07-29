@@ -1,0 +1,69 @@
+Schema : 
+
+	User Table
+		- user_id      ( char  ) ( PK )
+		- user_name    ( char  )
+		- user_profile ( char  )
+	
+	Post Table
+		- post_id   ( char ) ( PK )
+		- post_text ( char )
+		- post_date ( date )
+		- u_id      ( FK to User Table )
+		                                                                                                                                   
+	Comment Table
+		- com_id     ( PK   )
+		- com_text   ( char )
+		- p_id       ( FK to Post Table    )
+		- u_id       ( FK to User Table    )
+		- c_id       ( FK to Comment Table )  (null = True)
+		 
+	Reaction Table
+		- react_id   ( int  ) ( PK )
+		- react_type ( char )  
+		- r_id       ( FK to React Table    )  
+		- u_id       ( FK to User Table     ) 
+		- p_id       ( FK to Post Table     ) ( null = True)
+		- c_id       ( FK to Comment Table  ) ( null = True)
+	
+		 
+default db parameters : 
+
+	- null = False	
+
+Test Queries : 
+
+- get details of user having id 144
+
+	$ SELECT * FROM User WHERE user_id = '144' ;
+	
+- get all posts posted by user having id 123
+
+	$ SELECT * FROM Post WHERE u_id = '123' ;
+	
+- get all comments for post having id 205 
+
+	$ SELECT * FROM Comment WHERE  p_id = '205'
+	
+- get all comments for post having id 210 posted by user having id 102
+
+	$ SELECT * FROM Comment WHERE  p_id = '210' AND u_id = '102' ;
+	
+- get user name and comment from post 290
+
+	$ SELECT user_name , com_text FROM Comment NATURAL JOIN User WHERE p_id = '290' ;
+	
+- get count of reacts for post id '209'
+
+	$ SELECT COUNT(*) FROM Reaction WHERE post_id = '209'
+	
+- get count of reacts for comment id '309'
+
+	$ SELECT COUNT(*) FROM Reaction WHERE c_id = '309'
+	
+- get count of reacts for all comments in post id '203'
+
+	$ select count(*) from comment join reactcomment   where p_id = '203' ;
+	
+	
+	
